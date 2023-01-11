@@ -18,9 +18,12 @@ public static class Rearrange
             {
                 tempArray[index] = array[i]; // copy the first element
                 index++;
+            }
+            if (index < maxIndex)
+	        {
                 tempArray[index] = array[j]; // copy the last element
                 index++;
-            }
+	        }
         }
 
         // copy the temp array back to the original array

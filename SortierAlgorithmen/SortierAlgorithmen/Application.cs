@@ -52,12 +52,12 @@ public static class Application
         {
             case ConsoleKey.D1:
                 Console.WriteLine(Method is ZigZag
-                    ? $"Sortierter Mergesort-Array: {string.Join(", ", Merge.Sort(array).Zigzag())}"
+                    ? $"Sortierter Zig-Zag Mergesort-Array: {string.Join(", ", Merge.Sort(array).Zigzag())}"
                     : $"Sortierter Mergesort-Array: {string.Join(", ", Merge.Sort(array))}");
                 break;
             case ConsoleKey.D2:
                 Console.WriteLine(Method is ZigZag
-                    ? $"Sortierter Quicksort-Array: {string.Join(", ", Quick.Sort(array).Zigzag())}"
+                    ? $"Sortierter Zig-Zag Quicksort-Array: {string.Join(", ", Quick.Sort(array).Zigzag())}"
                     : $"Sortierter Quicksort-Array: {string.Join(", ", Quick.Sort(array))}");
                 break;
         }
