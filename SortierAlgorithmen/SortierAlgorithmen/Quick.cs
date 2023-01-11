@@ -45,8 +45,7 @@ public static class Quick
     {
         if (lowIndex < highIndex)
         {
-            var partitionIndex =
-                Partition(array, lowIndex, highIndex); // partitioning index, arr[p] is now at right place
+            var partitionIndex = Partition(array, lowIndex, highIndex); // partitioning index, arr[p] is now at right place
             Sort(array, lowIndex, partitionIndex - 1); // before partition
             Sort(array, partitionIndex + 1, highIndex); // after partition
         }
