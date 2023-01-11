@@ -1,0 +1,15 @@
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\bin\Debug\net6.0\SortierAlgorithmen.exe
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\bin\Debug\net6.0\SortierAlgorithmen.deps.json
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\bin\Debug\net6.0\SortierAlgorithmen.runtimeconfig.json
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\bin\Debug\net6.0\SortierAlgorithmen.dll
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\bin\Debug\net6.0\SortierAlgorithmen.pdb
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.csproj.AssemblyReference.cache
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.GeneratedMSBuildEditorConfig.editorconfig
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.AssemblyInfoInputs.cache
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.AssemblyInfo.cs
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.csproj.CoreCompileInputs.cache
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.dll
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\refint\SortierAlgorithmen.dll
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.pdb
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\SortierAlgorithmen.genruntimeconfig.cache
+E:\RiderSolutions\SortierAlgorithmen\SortierAlgorithmen\obj\Debug\net6.0\ref\SortierAlgorithmen.dll
