@@ -11,12 +11,11 @@ public static class Application
         ZigZag
     }
     
-    public static SortingMethod Method { get; set; }
+    public static SortingMethod Method { get; private set; }
 
     public static void Start()
     {
         Selection();
-        Console.ReadKey();
     }
 
     private static void Selection()
