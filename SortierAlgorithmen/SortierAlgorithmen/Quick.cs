@@ -23,19 +23,19 @@ public static class Quick
         return smallIndex + 1;
     }
 
-    private static T[] Sort<T>(this T[] array, int lowIndex, int highIndex) where T : IComparable
+    private static T[] QuickSort<T>(this T[] array, int lowIndex, int highIndex) where T : IComparable
     {
         if (lowIndex >= highIndex) return array;
         
         var partitionIndex = Partition(array, lowIndex, highIndex); // partitioning index, array[p] is now at right place
-        Sort(array, lowIndex, partitionIndex - 1); // before partition
-        Sort(array, partitionIndex + 1, highIndex); // after partition
+        array.QuickSort(lowIndex, partitionIndex - 1); // before partition
+        array.QuickSort(partitionIndex + 1, highIndex); // after partition
 
         return array;
     }
 
-    public static T[] Sort<T>(this T[] array) where T : IComparable
+    public static T[] QuickSort<T>(this T[] array) where T : IComparable
     {
-        return Sort(array, 0, array.Length - 1);
+        return array.QuickSort(0, array.Length - 1);
     }
 }

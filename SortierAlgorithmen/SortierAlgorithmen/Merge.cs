@@ -2,54 +2,54 @@
 
 public static class Merge
 {
-    private static void DoMerge<T>(this T[] array, int lowIndex, int middleIndex, int highIndex) where T : IComparable
+    public static void DoMerge<T>(this T[] array, int lowIndex, int middleIndex, int maxIndex) where T : IComparable
     {
-        var left = lowIndex;
-        var right = middleIndex + 1;
-        var tempArray = new T[highIndex - lowIndex + 1];
-        var index = 0;
-
-        while (left <= middleIndex && right <= highIndex) 
+        var rightIndex = middleIndex - lowIndex + 1;
+        var leftIndex = maxIndex - middleIndex;
+        
+        var leftArray = new T[rightIndex];
+        var rightArray = new T[leftIndex];
+        
+        for (int x = 0; x < rightIndex; x++)
+            leftArray[x] = array[lowIndex + x]; // copy left half
+        
+        for (int y = 0; y < leftIndex; y++)
+            rightArray[y] = array[middleIndex + 1 + y]; // copy right half
+        
+        int i = 0; // index of left subarray
+        int j = 0; // initial index of left and right subarrays
+        int k = lowIndex; // initial index of merged subarray
+        
+        while (i < rightIndex && j < leftIndex)
         {
-            tempArray[index] = array[left].CompareTo(array[right]) < 0 // sort max to min
-                        ? array[left++] 
-                        : array[right++];
+            array[k] = leftArray[i].CompareTo(rightArray[j]) <= 0  // compare left and right subarray
+                ? leftArray[i++] // if left subarray is smaller, copy it to merged subarray
+                : rightArray[j++]; // if right subarray is smaller, copy it to merged subarray
 
-                    index++;
+            k++;
         }
+        
+        while (i < rightIndex) // copy remaining elements of left subarray
+            array[k++] = leftArray[i++];
 
-        for (int i = left; i <= middleIndex; i++)
-        {
-            tempArray[index] = array[i]; // copy remaining elements
-            index++;
-        }
-
-        for (int i = right; i <= highIndex; i++)
-        {
-            tempArray[index] = array[i]; // copy remaining elements
-            index++;
-        }
-
-        for (int i = 0; i < tempArray.Length; i++)
-        {
-            array[lowIndex + i] = tempArray[i]; // transfer back to original array
-        }
+        while (j < leftIndex) // copy remaining elements of right subarray
+            array[k++] = rightArray[j++];
     }
 
     private static T[] Sort<T>(this T[] array, int lowIndex, int highIndex) where T : IComparable
     {
-        if (lowIndex >= highIndex) return array;
+        if (lowIndex >= highIndex) return array; // if array has only one element, return it
         
         var middleIndex = (lowIndex + highIndex) / 2; // calculate middle index
-        Sort(array, lowIndex, middleIndex); // sort first half of the array
-        Sort(array, middleIndex + 1, highIndex); // sort second half
-        DoMerge(array, lowIndex, middleIndex, highIndex); // merge both halves
-
+        array.Sort(lowIndex, middleIndex); // sort first half of the array
+        array.Sort(middleIndex + 1, highIndex); // sort second half
+        array.DoMerge(lowIndex, middleIndex, highIndex); // merge both halves;
+        
         return array;
     }
 
-    public static T[] Sort<T>(this T[] array) where T : IComparable
+    public static T[] MergeSort<T>(this T[] array) where T : IComparable
     {
-        return Sort(array, 0, array.Length - 1);
+        return array.Sort(0, array.Length - 1);
     }
 }

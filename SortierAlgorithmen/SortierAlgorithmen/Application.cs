@@ -1,17 +1,27 @@
-﻿using static SortierAlgorithmen.Application.SortingMethod;
+﻿using System.Diagnostics;
 
 namespace SortierAlgorithmen;
 
+#region Stopwatch Test
+
+// System: Windows 11, Ryzen 7 5800X, DDR4 32GB Ram @ CL16 3600MHz (4 x 8GB), Crucial P5 Plus 1TB SSD (r:6600 MB/s | w:5000 MB/s)
+
+// tested with an array based of 12 entries
+
+// merge     -> Dauer: minmax: 00:00:00.0004111 | zigzag: 00:00:00.0005836 --/1.
+// quick     -> Dauer: minmax: 00:00:00.0004470 | zigzag: 00:00:00.0006091 --/4.
+// tim       -> Dauer: minmax: 00:00:00.0004389 | zigzag: 00:00:00.0006979 --/3.
+// cube      -> Dauer: minmax: 00:00:00.0006485 | zigzag: 00:00:00.0008524 --/5.
+// insertion -> Dauer: minmax: 00:00:00.0004373 | zigzag: 00:00:00.0005920 --/2.
+
+#endregion
+
 public static class Application
 {
-    public enum SortingMethod
-    {
-        MinMax,
-        MaxMin,
-        ZigZag
-    }
-    
-    public static SortingMethod Method { get; private set; }
+    private enum InputType { Number, Algorithm, Order, Restart }
+    private static InputType inputType;
+
+    private static readonly Stopwatch Timer = new ();
 
     public static void Start()
     {
@@ -20,77 +30,93 @@ public static class Application
 
     private static void Selection()
     {
-        // intro
-        Console.WriteLine("\n\n\tWillkommen zu der Sortieralgorithmus-Application!");
-        Console.WriteLine("\n\n\tEs gibt die Möglichkeit die Zahlen auf unterschiedliche Art und Weise zu sortieren.");
-        Console.WriteLine("\n\n\tDie Zahlen können manuell eingegeben oder generiert werden.");
-        Console.WriteLine("\n\n\tBeliebige Taste zum fortfahren.");
-        Console.ReadKey();
-        
+        Intro();
+//
         // 1. choose number input or generate random numbers
-        //var array = NumberInput();
+        var array = NumberInput().PrintArray();
+        // var array = new []{12, 3, 5, 7, 9, 1, 2, 4, 6, 8, 10, 11};
         
+        var arrayCopy = CopyFrom(array); // copy array for later comparison and usage in other algorithms
+
+        // 2. choose sort algorithm
+        AlgorithmInput(arrayCopy);
+
+        // 3. choose sort order
+        OrderInput(arrayCopy);
         
-        // test area
-        var array = new []{12, 3, 5, 7, 9, 1, 2, 4, 6, 8, 10, 11};
-        Quick.Sort(array);
+        // 4. print sorted array
+        arrayCopy.PrintArray();
+        // Console.WriteLine("\n\n\tDauer : {0}", Timer.Elapsed);
 
-        var rearrangedArray = new int[array.Length];
-        array.CopyTo(rearrangedArray, 0);
-
-        rearrangedArray.Descending();
-        PrintArray(rearrangedArray);
-        rearrangedArray.Ascending();
-        PrintArray(rearrangedArray);
-        rearrangedArray.Zigzag();
-        PrintArray(rearrangedArray);
-
-        Console.ReadKey();
-
-
-
-
-
-        // 2. choose sorting method
-        //Console.WriteLine("\n\n\tWähle die Sortierreihenfolgen:\n\n\t 1 für Min -> Max\n\t 2 für Max -> Min\n\t 3 für Zig-Zag");
-        //switch (KeyInput())
-        //{
-        //    case ConsoleKey.D1:
-        //        Method = MinMax;
-        //        break;
-        //    case ConsoleKey.D2:
-        //        Method = MaxMin;
-        //        break;
-        //    case ConsoleKey.D3:
-        //        Method = ZigZag;
-        //        break;
-        //}
+        // 5. print original array
+        Console.WriteLine("\tUnsortierter ursprünglicher array");
+        array.PrintArray();
         
-        // 3. choose sorting algorithm
-        //Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t 1 für Mergesort\n\t 2 für Quicksort");
-        //switch (KeyInput())
-        //{
-        //    case ConsoleKey.D1:
-        //        Console.WriteLine(Method is ZigZag
-        //            ? $"Sortierter Zig-Zag Mergesort-Array: {string.Join(", ", Merge.Sort(array).Zigzag())}"
-        //            : $"Sortierter Mergesort-Array: {string.Join(", ", Merge.Sort(array))}");
-        //        break;
-        //    case ConsoleKey.D2:
-        //        Console.WriteLine(Method is ZigZag
-        //            ? $"Sortierter Zig-Zag Quicksort-Array: {string.Join(", ", Quick.Sort(array).Zigzag())}"
-        //            : $"Sortierter Quicksort-Array: {string.Join(", ", Quick.Sort(array))}");
-        //        break;
-        //}
+        RestartOptions();
+    }
+
+    private static void OrderInput(int[] arrayCopy)
+    {
+        inputType = InputType.Order;
+        Console.WriteLine("\n\n\tWähle die Sortierreihenfolge:\n\n\t1 für Min -> Max\n\t2 für Max -> Min\n\t3 für Zickzack\n");
+        switch (KeyInput())
+        {
+            case ConsoleKey.D1:
+                Timer.Restart();
+                arrayCopy.Ascending();
+                Timer.Stop();
+                break;
+            case ConsoleKey.D2:
+                Timer.Restart();
+                arrayCopy.Descending();
+                Timer.Stop();
+                break;
+            case ConsoleKey.D3:
+                Timer.Restart();
+                arrayCopy.Descending().Zigzag();
+                Timer.Stop();
+                break;
+        }
+    }
+
+    private static void AlgorithmInput(int[] arrayCopy)
+    {
+        inputType = InputType.Algorithm;
+        Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Timsort\n\t4 für Cubesort\n\t5 für Insertionsort\n");
+        switch (KeyInput())
+        {
+            case ConsoleKey.D1:
+                Timer.Start();
+                arrayCopy.MergeSort();
+                Timer.Stop();
+                break;
+            case ConsoleKey.D2:
+                Timer.Start();
+                arrayCopy.QuickSort();
+                Timer.Stop();
+                break;
+            case ConsoleKey.D3:
+                Timer.Start();
+                arrayCopy.TimSort();
+                Timer.Stop();
+                break;
+            case ConsoleKey.D4:
+                Timer.Start();
+                arrayCopy.CubeSort();
+                Timer.Stop();
+                break;
+            case ConsoleKey.D5:
+                Timer.Start();
+                arrayCopy.InsertionSort();
+                Timer.Stop();
+                break;
+        }
     }
     
-    private static void PrintArray<T>(T[] array) where T : IComparable<T>
-    {
-        Console.WriteLine($"{string.Join(", ", array)}");
-    }
-
     private static int[] NumberInput()
-    {
-        Console.WriteLine("\n\t 1 für manuelle Eingabe\n\t 2 für Zufallszahlen");
+    { 
+        inputType = InputType.Number;
+        Console.WriteLine("\n\n\t1 für manuelle Eingabe\n\t2 für Zufallszahlen\n");
         switch (KeyInput())
         {
             case ConsoleKey.D1:
@@ -99,7 +125,36 @@ public static class Application
                 return RandomInput();
         }
 
-        return null;
+        return null!;
+    }
+
+    private static void Intro()
+    {
+        Console.WriteLine("\n\n\tWillkommen zu der Sortieralgorithmus-Application!");
+        Console.WriteLine("\n\n\tEs gibt die Möglichkeit die Zahlen auf unterschiedliche Art und Weise zu sortieren.");
+        Console.WriteLine("\n\n\tDie Zahlen können manuell eingegeben oder generiert werden.");
+        Console.WriteLine("\n\n\tBeliebige Taste zum fortfahren.");
+        Console.ReadKey();
+        Console.Clear();
+    }
+
+    private static int[] CopyFrom(int[] array)
+    {
+        var arrayCopy = new int[array.Length];
+        array.CopyTo(arrayCopy, 0);
+        
+        return arrayCopy;
+    }
+
+    private static T[] PrintArray<T>(this T[] array) where T : IComparable<T>
+    {
+        Console.WriteLine($"\n\n\t{string.Join(", ", array)}");
+
+        Console.WriteLine("\n\n\tBeliebige Taste zum fortfahren.");
+        Console.ReadKey();
+        Console.Clear();
+        
+        return array;
     }
 
     private static int[] ManualInput()
@@ -107,13 +162,10 @@ public static class Application
         Console.WriteLine("\n\n\tFüge Zahlen zum sortieren hinzu(Leerzeichen, Komma oder Punkt zum Trennen): ");
         var separators = new[] { ' ', ',', '.', ';', ':' };
         var elements = Console.ReadLine()!.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-        var array = new int[elements.Length];
-        for (int i = 0; i < elements.Length; i++)
-        {
-            array[i] = int.Parse(elements[i]);
-        }
-
-        return array;
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        ClearCurrentConsoleLine();
+        
+        return elements.Select(int.Parse).ToArray();
     }
     
     private static int[] RandomInput()
@@ -130,8 +182,9 @@ public static class Application
 
         while (!ValidInput(inputKey)) // Input validation 
         {
-            Console.WriteLine("\tDie Eingabe war falsch.");
-            Console.WriteLine("\n\n\tWähle die Sortierreihenfolgen:\n 1 für Min -> Max\n 2 für Max -> Min\n 3 für Zig-Zag");
+            Console.WriteLine("\tDie Eingabe war keine Ganzzahl.");
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            
             inputKey = Console.ReadKey().Key;
         }
 
@@ -143,10 +196,36 @@ public static class Application
 
     private static bool ValidInput(ConsoleKey input)
     {
-        return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3;
+        switch (inputType)
+        {
+            case InputType.Number or InputType.Restart:
+                return input is ConsoleKey.D1 or ConsoleKey.D2;
+            case InputType.Algorithm:
+                return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3 or ConsoleKey.D4 or ConsoleKey.D5;
+            case InputType.Order:
+                return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3;
+        }
+        
+        return false;
+    }
+    
+    private static void RestartOptions()
+    {
+        inputType = InputType.Restart;
+        Console.WriteLine($"\n\n\n\t1. Neu starten\n\t2. Beenden\n");
+        switch (KeyInput())
+        {
+            case ConsoleKey.D1:
+                Console.Clear();
+                Start();
+                break;
+            case ConsoleKey.D2:
+                Environment.Exit(0);
+                break;
+        }
     }
 
- 	private static int[] GenerateNumbers(int elementSize)
+    private static int[] GenerateNumbers(int elementSize)
     {
         var numbers = new int[elementSize];
         var range = new Random();
@@ -157,5 +236,13 @@ public static class Application
         }
 
         return numbers;
+    }
+    
+    public static void ClearCurrentConsoleLine()
+    {
+        var currentLineCursor = Console.CursorTop;
+        Console.SetCursorPosition(0, Console.CursorTop);
+        Console.Write(new string(' ', Console.WindowWidth)); 
+        Console.SetCursorPosition(0, currentLineCursor);
     }
 }

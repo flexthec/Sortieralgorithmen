@@ -20,6 +20,8 @@ ebenfalls zur Laufzeit gemacht werden können.
 
 [x] Eigenständige Klasse für die Sortierreihenfolgen-Methoden erstellen
 
-[ ] Ein Algorithmus hinzufügen
+[x] Ein Algorithmus hinzufügen
 
 [ ] Bonus - Stichwort: "Comparator"
+
+[x] Bonus 2 - TimSort als vierten Algorithmus

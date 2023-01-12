@@ -27,10 +27,10 @@ public static class Rearrange
         
         // i and j are the indices of the first and last element of the array
         // i and j are incremented and decremented respectively
-        for (int i = 0, j = maxIndex - 1;  
-             i <= maxIndex / 2
-             || j > maxIndex / 2; 
-             i++, j--) 
+        for (int i = 0, j = maxIndex - 1; 
+             i <= maxIndex / 2 
+             || j > maxIndex / 2;
+             i++, j--)
         {
             if (index < maxIndex)
             {
@@ -53,6 +53,6 @@ public static class Rearrange
     
     public static T[] Zigzag<T>(this T[] array) where T : IComparable
     {
-        return Zigzag(array, array.Length);
+        return array.Zigzag(array.Length);
     }
 }
