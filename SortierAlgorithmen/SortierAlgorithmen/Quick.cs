@@ -1,6 +1,4 @@
-﻿using static SortierAlgorithmen.Application.SortingMethod;
-
-namespace SortierAlgorithmen;
+﻿namespace SortierAlgorithmen;
 
 public static class Quick
 {
@@ -13,42 +11,25 @@ public static class Quick
     {
         var pivot = array[highIndex]; // pivot is the last element
         var smallIndex = lowIndex - 1; // index of smaller elements
-
-        switch (Application.Method)
+      
+        for (int index = lowIndex; index <= highIndex - 1; index++)
         {
-            case MinMax:
-                for (int index = lowIndex; index <= highIndex - 1; index++)
-                {
-                    if (array[index].CompareTo(pivot) >= 0) continue; // if current element is smaller than or equal to pivot
-                    smallIndex++;
-                    array.Swap(smallIndex, index); // swap smaller element to the left
-                }
-
-                break;
-            case MaxMin or ZigZag:
-                for (int index = lowIndex; index <= highIndex - 1; index++)
-                {
-                    if (array[index].CompareTo(pivot) <= 0) continue; // if current element is smaller than or equal to pivot
-                    smallIndex++;
-                    array.Swap(smallIndex, index); // swap smaller element to the left
-                }
-                
-                break;
+            if (array[index].CompareTo(pivot) >= 0) continue; // if current element is smaller than or equal to pivot
+            smallIndex++;
+            array.Swap(smallIndex, index); // swap smaller element to the left
         }
-
-
+      
         array.Swap(smallIndex + 1, highIndex); // swap pivot to the right
         return smallIndex + 1;
     }
 
     private static T[] Sort<T>(this T[] array, int lowIndex, int highIndex) where T : IComparable
     {
-        if (lowIndex < highIndex)
-        {
-            var partitionIndex = Partition(array, lowIndex, highIndex); // partitioning index, array[p] is now at right place
-            Sort(array, lowIndex, partitionIndex - 1); // before partition
-            Sort(array, partitionIndex + 1, highIndex); // after partition
-        }
+        if (lowIndex >= highIndex) return array;
+        
+        var partitionIndex = Partition(array, lowIndex, highIndex); // partitioning index, array[p] is now at right place
+        Sort(array, lowIndex, partitionIndex - 1); // before partition
+        Sort(array, partitionIndex + 1, highIndex); // after partition
 
         return array;
     }

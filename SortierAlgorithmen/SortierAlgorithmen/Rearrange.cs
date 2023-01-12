@@ -2,7 +2,25 @@
 
 public static class Rearrange
 {
+    // increasing array order using CompareTo() method
+    public static T[] Ascending<T>(this T[] array) where T : IComparable<T>
+    {
+        Array.Sort(array, (y, x) => y.CompareTo(x));
+        
+        return array;
+    }
+    
+    // decreasing array order using CompareTo() method
+    public static T[] Descending<T>(this T[] array) where T : IComparable<T>
+    {
+        Array.Sort(array, (x, y) => y.CompareTo(x));
+        
+        return array;
+    }
+
+    // rearrange array with first largest number, smallest number, 2nd largest number, 2nd smallest number, and so on
     private static T[] Zigzag<T>(this T[] array, int maxIndex) where T : IComparable
+    
     {
         var tempArray = new T[maxIndex];
         int index = 0;

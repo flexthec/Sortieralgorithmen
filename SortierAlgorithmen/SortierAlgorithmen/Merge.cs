@@ -1,6 +1,4 @@
-﻿using static SortierAlgorithmen.Application.SortingMethod;
-
-namespace SortierAlgorithmen;
+﻿namespace SortierAlgorithmen;
 
 public static class Merge
 {
@@ -13,21 +11,11 @@ public static class Merge
 
         while (left <= middleIndex && right <= highIndex) 
         {
-            switch (Application.Method)
-            {
-                case MinMax:
-                    tempArray[index] = array[left].CompareTo(array[right]) < 0 // sort max to min
+            tempArray[index] = array[left].CompareTo(array[right]) < 0 // sort max to min
                         ? array[left++] 
                         : array[right++];
-                    break;
-                case MaxMin or ZigZag:
-                    tempArray[index] = array[left].CompareTo(array[right]) > 0 // sort min to max
-                        ? array[left++] 
-                        : array[right++];
-                    break;
-            }
 
-            index++;
+                    index++;
         }
 
         for (int i = left; i <= middleIndex; i++)
@@ -50,13 +38,12 @@ public static class Merge
 
     private static T[] Sort<T>(this T[] array, int lowIndex, int highIndex) where T : IComparable
     {
-        if (lowIndex < highIndex)
-        {
-            var middleIndex = (lowIndex + highIndex) / 2; // calculate middle index
-            Sort(array, lowIndex, middleIndex); // sort first half of the array
-            Sort(array, middleIndex + 1, highIndex); // sort second half
-            DoMerge(array, lowIndex, middleIndex, highIndex); // merge both halves
-        }
+        if (lowIndex >= highIndex) return array;
+        
+        var middleIndex = (lowIndex + highIndex) / 2; // calculate middle index
+        Sort(array, lowIndex, middleIndex); // sort first half of the array
+        Sort(array, middleIndex + 1, highIndex); // sort second half
+        DoMerge(array, lowIndex, middleIndex, highIndex); // merge both halves
 
         return array;
     }

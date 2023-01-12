@@ -28,38 +28,64 @@ public static class Application
         Console.ReadKey();
         
         // 1. choose number input or generate random numbers
-        var array = NumberInput();
+        //var array = NumberInput();
+        
+        
+        // test area
+        var array = new []{12, 3, 5, 7, 9, 1, 2, 4, 6, 8, 10, 11};
+        Quick.Sort(array);
+
+        var rearrangedArray = new int[array.Length];
+        array.CopyTo(rearrangedArray, 0);
+
+        rearrangedArray.Descending();
+        PrintArray(rearrangedArray);
+        rearrangedArray.Ascending();
+        PrintArray(rearrangedArray);
+        rearrangedArray.Zigzag();
+        PrintArray(rearrangedArray);
+
+        Console.ReadKey();
+
+
+
+
 
         // 2. choose sorting method
-        Console.WriteLine("\n\n\tWähle die Sortierreihenfolgen:\n\n\t 1 für Min -> Max\n\t 2 für Max -> Min\n\t 3 für Zig-Zag");
-        switch (KeyInput())
-        {
-            case ConsoleKey.D1:
-                Method = MinMax;
-                break;
-            case ConsoleKey.D2:
-                Method = MaxMin;
-                break;
-            case ConsoleKey.D3:
-                Method = ZigZag;
-                break;
-        }
+        //Console.WriteLine("\n\n\tWähle die Sortierreihenfolgen:\n\n\t 1 für Min -> Max\n\t 2 für Max -> Min\n\t 3 für Zig-Zag");
+        //switch (KeyInput())
+        //{
+        //    case ConsoleKey.D1:
+        //        Method = MinMax;
+        //        break;
+        //    case ConsoleKey.D2:
+        //        Method = MaxMin;
+        //        break;
+        //    case ConsoleKey.D3:
+        //        Method = ZigZag;
+        //        break;
+        //}
         
         // 3. choose sorting algorithm
-        Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t 1 für Mergesort\n\t 2 für Quicksort");
-        switch (KeyInput())
-        {
-            case ConsoleKey.D1:
-                Console.WriteLine(Method is ZigZag
-                    ? $"Sortierter Zig-Zag Mergesort-Array: {string.Join(", ", Merge.Sort(array).Zigzag())}"
-                    : $"Sortierter Mergesort-Array: {string.Join(", ", Merge.Sort(array))}");
-                break;
-            case ConsoleKey.D2:
-                Console.WriteLine(Method is ZigZag
-                    ? $"Sortierter Zig-Zag Quicksort-Array: {string.Join(", ", Quick.Sort(array).Zigzag())}"
-                    : $"Sortierter Quicksort-Array: {string.Join(", ", Quick.Sort(array))}");
-                break;
-        }
+        //Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t 1 für Mergesort\n\t 2 für Quicksort");
+        //switch (KeyInput())
+        //{
+        //    case ConsoleKey.D1:
+        //        Console.WriteLine(Method is ZigZag
+        //            ? $"Sortierter Zig-Zag Mergesort-Array: {string.Join(", ", Merge.Sort(array).Zigzag())}"
+        //            : $"Sortierter Mergesort-Array: {string.Join(", ", Merge.Sort(array))}");
+        //        break;
+        //    case ConsoleKey.D2:
+        //        Console.WriteLine(Method is ZigZag
+        //            ? $"Sortierter Zig-Zag Quicksort-Array: {string.Join(", ", Quick.Sort(array).Zigzag())}"
+        //            : $"Sortierter Quicksort-Array: {string.Join(", ", Quick.Sort(array))}");
+        //        break;
+        //}
+    }
+    
+    private static void PrintArray<T>(T[] array) where T : IComparable<T>
+    {
+        Console.WriteLine($"{string.Join(", ", array)}");
     }
 
     private static int[] NumberInput()
@@ -73,7 +99,7 @@ public static class Application
                 return RandomInput();
         }
 
-        return null!;
+        return null;
     }
 
     private static int[] ManualInput()
@@ -98,19 +124,6 @@ public static class Application
         return array;
     }
     
-    private static int[] GenerateNumbers(int elementSize)
-    {
-        var numbers = new int[elementSize];
-        var range = new Random();
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = range.Next(-1000, 1000);
-        }
-
-        return numbers;
-    }
-    
     private static ConsoleKey KeyInput()
     {
         var inputKey = Console.ReadKey().Key;
@@ -131,5 +144,18 @@ public static class Application
     private static bool ValidInput(ConsoleKey input)
     {
         return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3;
+    }
+
+ 	private static int[] GenerateNumbers(int elementSize)
+    {
+        var numbers = new int[elementSize];
+        var range = new Random();
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = range.Next(-1000, 1000);
+        }
+
+        return numbers;
     }
 }

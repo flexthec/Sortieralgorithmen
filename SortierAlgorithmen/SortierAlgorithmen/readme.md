@@ -18,9 +18,7 @@ Die Auswahl soll zur Laufzeit gemacht werden können.
 und dann die zweit kleinste, usw.) ausgegeben werden. Die Auswahl soll 
 ebenfalls zur Laufzeit gemacht werden können.
 
-[ ] Eigenständige Klasse für die Sortierunds-Methoden erstellen
-
-[ ] Zig-Zag als Print-Methode erstellen.
+[x] Eigenständige Klasse für die Sortierreihenfolgen-Methoden erstellen
 
 [ ] Ein Algorithmus hinzufügen
 
