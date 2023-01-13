@@ -8,12 +8,6 @@ namespace SortierAlgorithmen;
 
 // tested with an array based of 1000 elements !!! INVALID !!!
 
-// merge     -> Dauer: minmax: 00:00:00.0009133 | zigzag: 00:00:00.0013622 --/1.
-// quick     -> Dauer: minmax: 00:00:00.0004470 | zigzag: 00:00:00.0014448 --/4.
-// tim       -> Dauer: minmax: 00:00:00.0011532 | zigzag: 00:00:00.0011200 --/3.
-// cube      -> Dauer: minmax: 00:00:00.0005244 | zigzag: 00:00:00.0005542 --/5.
-// insertion -> Dauer: minmax: 00:00:00.0004373 | zigzag: 00:00:00.0005920 --/2.
-
 #endregion
 
 public static class Application
@@ -31,13 +25,6 @@ public static class Application
     private static void Selection()
     {
         Intro();
-        
-        #region Test Fields
-        //var array = new []{12, 3, 5, 7, 9, 1, 2, 4, 6, 8, 10, 11};
-        //const string path = "E:\\GitFork\\Sortieralgorithmen\\Numbers.txt";
-        //var textArray = File.ReadAllText(path).Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        //textArray.PrintArray();
-        #endregion
 
         // 1. choose number input or generate random numbers
         var array = NumberInput().PrintArray();
@@ -55,8 +42,8 @@ public static class Application
         Console.WriteLine("\n\n\tDauer der Sortierung : {0}", Timer.Elapsed);
 
         // 5. print original array
-        //Console.WriteLine("\tUnsortierter ursprünglicher array");
-        //array.PrintArray();
+        Console.WriteLine("\tUnsortierter ursprünglicher array");
+        array.PrintArray();
         
         RestartOptions();
     }
@@ -68,9 +55,9 @@ public static class Application
         switch (KeyInput())
         {
             case ConsoleKey.D1:
-                Timer.Restart();
-                arrayCopy.Ascending();
-                Timer.Stop();
+                // Timer.Restart();
+                // arrayCopy.Ascending();
+                // Timer.Stop();
                 break;
             case ConsoleKey.D2:
                 Timer.Restart();
@@ -88,7 +75,7 @@ public static class Application
     private static void AlgorithmInput<T>(T[] arrayCopy) where T : IComparable
     {
         inputType = InputType.Algorithm;
-        Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Timsort\n\t4 für Cubesort\n\t5 für Insertionsort\n");
+        Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Timsort\n\t4 für Insertionsort\n");
         switch (KeyInput())
         {
             case ConsoleKey.D1:
@@ -107,11 +94,6 @@ public static class Application
                 Timer.Stop();
                 break;
             case ConsoleKey.D4:
-                Timer.Start();
-                arrayCopy.CubeSort();
-                Timer.Stop();
-                break;
-            case ConsoleKey.D5:
                 Timer.Start();
                 arrayCopy.InsertionSort();
                 Timer.Stop();
@@ -176,8 +158,8 @@ public static class Application
     
     private static int[] RandomInput()
     {
-        Console.WriteLine("\n\n\tWähle 10 bis 20 Zahlen die generiert werden sollen: ");
-        var array = GenerateNumbers(int.Parse(Console.ReadLine()!));
+        Console.WriteLine("\n\n\tWähle eine Ganzzahl von 10 bis 1000 die generiert werden sollen: ");
+        var array = GenerateNumbers(ValidNumber());
         
         return array;
     }
@@ -200,6 +182,21 @@ public static class Application
         return inputKey;
     }
 
+    private static int ValidNumber()
+    {
+        bool success = int.TryParse(Console.ReadLine(), out var inputValue);
+        bool valid = success && inputValue is >= 10 and <= 1000;
+        while (!valid)
+        {
+            Console.WriteLine("\tDie Eingabe war keine Ganzzahl und/oder nicht zwischen 10 und 1000.");
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            success = int.TryParse(Console.ReadLine(), out inputValue);
+            valid = success && inputValue is >= 10 and <= 1000;
+        }
+        
+        return inputValue;
+    }
+
     private static bool ValidInput(ConsoleKey input)
     {
         switch (inputType)
@@ -207,7 +204,7 @@ public static class Application
             case InputType.Number or InputType.Restart:
                 return input is ConsoleKey.D1 or ConsoleKey.D2;
             case InputType.Algorithm:
-                return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3 or ConsoleKey.D4 or ConsoleKey.D5;
+                return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3 or ConsoleKey.D4;
             case InputType.Order:
                 return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3;
         }
@@ -238,13 +235,13 @@ public static class Application
 
         for (int i = 0; i < numbers.Length; i++)
         {
-            numbers[i] = range.Next(-1000, 1000);
+            numbers[i] = range.Next(1, 1000);
         }
 
         return numbers;
     }
-    
-    public static void ClearCurrentConsoleLine()
+
+    private static void ClearCurrentConsoleLine()
     {
         var currentLineCursor = Console.CursorTop;
         Console.SetCursorPosition(0, Console.CursorTop);
