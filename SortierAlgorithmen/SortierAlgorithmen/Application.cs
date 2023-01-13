@@ -6,12 +6,12 @@ namespace SortierAlgorithmen;
 
 // System: Windows 11, Ryzen 7 5800X, DDR4 32GB Ram @ CL16 3600MHz (4 x 8GB), Crucial P5 Plus 1TB SSD (r:6600 MB/s | w:5000 MB/s)
 
-// tested with an array based of 12 entries
+// tested with an array based of 1000 elements !!! INVALID !!!
 
-// merge     -> Dauer: minmax: 00:00:00.0004111 | zigzag: 00:00:00.0005836 --/1.
-// quick     -> Dauer: minmax: 00:00:00.0004470 | zigzag: 00:00:00.0006091 --/4.
-// tim       -> Dauer: minmax: 00:00:00.0004389 | zigzag: 00:00:00.0006979 --/3.
-// cube      -> Dauer: minmax: 00:00:00.0006485 | zigzag: 00:00:00.0008524 --/5.
+// merge     -> Dauer: minmax: 00:00:00.0009133 | zigzag: 00:00:00.0013622 --/1.
+// quick     -> Dauer: minmax: 00:00:00.0004470 | zigzag: 00:00:00.0014448 --/4.
+// tim       -> Dauer: minmax: 00:00:00.0011532 | zigzag: 00:00:00.0011200 --/3.
+// cube      -> Dauer: minmax: 00:00:00.0005244 | zigzag: 00:00:00.0005542 --/5.
 // insertion -> Dauer: minmax: 00:00:00.0004373 | zigzag: 00:00:00.0005920 --/2.
 
 #endregion
@@ -31,10 +31,16 @@ public static class Application
     private static void Selection()
     {
         Intro();
-//
+        
+        #region Test Fields
+        //var array = new []{12, 3, 5, 7, 9, 1, 2, 4, 6, 8, 10, 11};
+        //const string path = "E:\\GitFork\\Sortieralgorithmen\\Numbers.txt";
+        //var textArray = File.ReadAllText(path).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        //textArray.PrintArray();
+        #endregion
+
         // 1. choose number input or generate random numbers
         var array = NumberInput().PrintArray();
-        // var array = new []{12, 3, 5, 7, 9, 1, 2, 4, 6, 8, 10, 11};
         
         var arrayCopy = CopyFrom(array); // copy array for later comparison and usage in other algorithms
 
@@ -46,16 +52,16 @@ public static class Application
         
         // 4. print sorted array
         arrayCopy.PrintArray();
-        // Console.WriteLine("\n\n\tDauer : {0}", Timer.Elapsed);
+        Console.WriteLine("\n\n\tDauer der Sortierung : {0}", Timer.Elapsed);
 
         // 5. print original array
-        Console.WriteLine("\tUnsortierter ursprünglicher array");
-        array.PrintArray();
+        //Console.WriteLine("\tUnsortierter ursprünglicher array");
+        //array.PrintArray();
         
         RestartOptions();
     }
 
-    private static void OrderInput(int[] arrayCopy)
+    private static void OrderInput<T>(T[] arrayCopy) where T : IComparable, IComparable<T>
     {
         inputType = InputType.Order;
         Console.WriteLine("\n\n\tWähle die Sortierreihenfolge:\n\n\t1 für Min -> Max\n\t2 für Max -> Min\n\t3 für Zickzack\n");
@@ -79,7 +85,7 @@ public static class Application
         }
     }
 
-    private static void AlgorithmInput(int[] arrayCopy)
+    private static void AlgorithmInput<T>(T[] arrayCopy) where T : IComparable
     {
         inputType = InputType.Algorithm;
         Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Timsort\n\t4 für Cubesort\n\t5 für Insertionsort\n");
@@ -138,9 +144,9 @@ public static class Application
         Console.Clear();
     }
 
-    private static int[] CopyFrom(int[] array)
+    private static T[] CopyFrom<T>(T[] array)
     {
-        var arrayCopy = new int[array.Length];
+        var arrayCopy = new T[array.Length];
         array.CopyTo(arrayCopy, 0);
         
         return arrayCopy;

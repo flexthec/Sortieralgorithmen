@@ -3,7 +3,7 @@
 public static class Rearrange
 {
     // increasing array order using CompareTo() method
-    public static T[] Ascending<T>(this T[] array) where T : IComparable<T>
+    public static T[] Ascending<T>(this T[] array) where T : IComparable<T>, IComparable
     {
         Array.Sort(array, (y, x) => y.CompareTo(x));
         
