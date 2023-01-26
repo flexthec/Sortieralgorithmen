@@ -2,7 +2,7 @@
 
 public static class Quick
 {
-    private static void Swap<T>(this T[] array, int left, int right) where T : IComparable
+    public static void Swap<T>(this T[] array, int left, int right) where T : IComparable
     {
         (array[left], array[right]) = (array[right], array[left]);
     }

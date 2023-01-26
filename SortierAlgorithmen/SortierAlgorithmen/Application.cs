@@ -19,7 +19,7 @@ namespace SortierAlgorithmen;
 public static class Application
 {
     private enum InputType { Number, Algorithm, Order, Restart }
-    private static InputType inputType;
+    private static InputType _inputType;
 
     private static readonly Stopwatch Timer = new ();
 
@@ -41,6 +41,7 @@ public static class Application
 
         // 1. choose number input or generate random numbers
         var array = NumberInput().PrintArray();
+        //var array = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
         
         var arrayCopy = CopyFrom(array); // copy array for later comparison and usage in other algorithms
 
@@ -55,31 +56,28 @@ public static class Application
         Console.WriteLine("\n\n\tDauer der Sortierung : {0}", Timer.Elapsed);
 
         // 5. print original array
-        //Console.WriteLine("\tUnsortierter ursprünglicher array");
-        //array.PrintArray();
+        Console.WriteLine("\tUnsortierter ursprünglicher array");
+        array.PrintArray();
         
         RestartOptions();
     }
 
     private static void OrderInput<T>(T[] arrayCopy) where T : IComparable, IComparable<T>
     {
-        inputType = InputType.Order;
+        _inputType = InputType.Order;
         Console.WriteLine("\n\n\tWähle die Sortierreihenfolge:\n\n\t1 für Min -> Max\n\t2 für Max -> Min\n\t3 für Zickzack\n");
         switch (KeyInput())
         {
             case ConsoleKey.D1:
-                Timer.Restart();
-                arrayCopy.Ascending();
-                Timer.Stop();
                 break;
             case ConsoleKey.D2:
                 Timer.Restart();
-                arrayCopy.Descending();
+                arrayCopy.ReverseSort();
                 Timer.Stop();
                 break;
             case ConsoleKey.D3:
                 Timer.Restart();
-                arrayCopy.Descending().Zigzag();
+                arrayCopy.ReverseSort().Zigzag();
                 Timer.Stop();
                 break;
         }
@@ -87,7 +85,7 @@ public static class Application
 
     private static void AlgorithmInput<T>(T[] arrayCopy) where T : IComparable
     {
-        inputType = InputType.Algorithm;
+        _inputType = InputType.Algorithm;
         Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Timsort\n\t4 für Cubesort\n\t5 für Insertionsort\n");
         switch (KeyInput())
         {
@@ -121,7 +119,7 @@ public static class Application
     
     private static int[] NumberInput()
     { 
-        inputType = InputType.Number;
+        _inputType = InputType.Number;
         Console.WriteLine("\n\n\t1 für manuelle Eingabe\n\t2 für Zufallszahlen\n");
         switch (KeyInput())
         {
@@ -176,8 +174,8 @@ public static class Application
     
     private static int[] RandomInput()
     {
-        Console.WriteLine("\n\n\tWähle 10 bis 20 Zahlen die generiert werden sollen: ");
-        var array = GenerateNumbers(int.Parse(Console.ReadLine()!));
+        Console.WriteLine("\n\n\tWähle eine Ganzzahl von 10 bis 100.000 die generiert werden sollen: ");
+        var array = GenerateNumbers(ValidNumber());
         
         return array;
     }
@@ -202,7 +200,7 @@ public static class Application
 
     private static bool ValidInput(ConsoleKey input)
     {
-        switch (inputType)
+        switch (_inputType)
         {
             case InputType.Number or InputType.Restart:
                 return input is ConsoleKey.D1 or ConsoleKey.D2;
@@ -214,10 +212,25 @@ public static class Application
         
         return false;
     }
+
+    private static int ValidNumber()
+    {
+        var success = int.TryParse(Console.ReadLine(), out var inputValue);
+        var valid = success && inputValue is >= 10 and <= 100000;
+        while (!valid)
+        {
+            Console.WriteLine("\tDie Eingabe war keine Ganzzahl und/oder die Zahl war nicht zwischen 10 und 100.000.");
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            success = int.TryParse(Console.ReadLine(), out inputValue);
+            valid = success && 0 <= inputValue && inputValue <= 100;
+        }
+
+        return inputValue;
+    }
     
     private static void RestartOptions()
     {
-        inputType = InputType.Restart;
+        _inputType = InputType.Restart;
         Console.WriteLine($"\n\n\n\t1. Neu starten\n\t2. Beenden\n");
         switch (KeyInput())
         {

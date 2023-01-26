@@ -27,15 +27,15 @@ public static class Tim
         for (int size = RUN; size < maxIndex; size = 2 * size)
         {
             // Starting point at left subarray.After every merge, we increase left by 2*size
-            for (int left = 0; left < maxIndex; left += 2 * size)
+            for (int left = 0; left < maxIndex; left += 2 * size) // -> left nach 2. iteration: 128
             {
                 // Find ending point of left subarray. mid+1 is starting point of right subarray.
-                int middle = left + size - 1;
+                int middle = left + size - 1; // -> nach der 2. iteration: 128 + 32 - 1 = 159
                 int right = Math.Min(left + 2 * size - 1, maxIndex - 1);
                 
+                if (middle < left)
                 // Merge subarrays array[left...mid] & array[mid+1...right]
                 array.DoMerge(left, middle, right);
-                //Merge(array, left, middle, right);
             }
         }
         

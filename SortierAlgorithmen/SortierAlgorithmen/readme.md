@@ -20,7 +20,7 @@ Ein- und Ausgaben für die Verwendung zur Laufzeit.
 zufälligen Zahlen generieren zu lassen bzw. selber eine Reihe an 
 Zahlen einzugeben.
 
-[ ] Diese Zahlen sollen dann mit mindestens 3 verschiedene Arten 
+[x] Diese Zahlen sollen dann mit mindestens 3 verschiedene Arten 
 sortiert werden. Schaue dir dafür unterschiedliche Algorithmen 
 an und überlege dir, welche dafür geeignet sind. 
 Die Auswahl soll zur Laufzeit gemacht werden können.
