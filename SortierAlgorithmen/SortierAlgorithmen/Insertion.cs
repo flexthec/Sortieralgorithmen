@@ -8,10 +8,10 @@ public static class Insertion
         {
             T tempArray = array[i];
             int j = i; // j is the number of items sorted so far
-            while (j > 0 && array[j - 1].CompareTo(tempArray) > 0) // if the item to the left is greater than the item to the right
+            while (j > 0 && array[j - 1].CompareTo(tempArray) > 0)
             {
                 array[j] = array[j - 1]; // shift item to the right
-                j--; // go left one position
+                j--;
             }
             
             array[j] = tempArray; // insert the saved item

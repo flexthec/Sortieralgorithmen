@@ -1,5 +1,6 @@
 ﻿namespace SortierAlgorithmen;
-
+//--------------------------------------------------------------------------------------------------
+//      !!!!THE TIMSORT ALGORITHM DOES NOT WORK PROPERLY YET!!!! (last element is not sorted)
 //--------------------------------------------------------------------------------------------------
 // Divide the array into blocks known as runs. Sort runs using insertion sort.
 // Merge runs using combine function in merge sort. If the size of the array is less than run,
@@ -30,7 +31,7 @@ public static class Tim
             for (int left = 0; left < maxIndex; left += 2 * size) // -> left nach 2. iteration: 128
             {
                 // Find ending point of left subarray. mid+1 is starting point of right subarray.
-                int middle = left + size - 1; // -> nach der 2. iteration: 128 + 32 - 1 = 159
+                int middle = left + size - 1; // -> e.g. after 2. iteration: 128 + 32 - 1 = 159
                 int right = Math.Min(left + 2 * size - 1, maxIndex - 1);
                 
                 if (middle < left)

@@ -2,14 +2,6 @@
 
 namespace SortierAlgorithmen;
 
-#region Stopwatch Test
-
-// System: Windows 11, Ryzen 7 5800X, DDR4 32GB Ram @ CL16 3600MHz (4 x 8GB), Crucial P5 Plus 1TB SSD (r:6600 MB/s | w:5000 MB/s)
-
-// tested with an array based of 1000 elements !!! INVALID !!!
-
-#endregion
-
 public static class Application
 {
     private enum InputType { Number, Algorithm, Order, Restart }
@@ -55,18 +47,15 @@ public static class Application
         switch (KeyInput())
         {
             case ConsoleKey.D1:
-                // Timer.Restart();
-                // arrayCopy.Ascending();
-                // Timer.Stop();
                 break;
             case ConsoleKey.D2:
                 Timer.Restart();
-                arrayCopy.Descending();
+                arrayCopy.ReverseSort();
                 Timer.Stop();
                 break;
             case ConsoleKey.D3:
                 Timer.Restart();
-                arrayCopy.Descending().Zigzag();
+                arrayCopy.ReverseSort().Zigzag();
                 Timer.Stop();
                 break;
         }
@@ -75,7 +64,7 @@ public static class Application
     private static void AlgorithmInput<T>(T[] arrayCopy) where T : IComparable
     {
         inputType = InputType.Algorithm;
-        Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Timsort\n\t4 für Insertionsort\n");
+        Console.WriteLine("\n\n\tWähle den Sortieralgorithmus:\n\n\t1 für Mergesort\n\t2 für Quicksort\n\t3 für Insertionsort\n");
         switch (KeyInput())
         {
             case ConsoleKey.D1:
@@ -86,11 +75,6 @@ public static class Application
             case ConsoleKey.D2:
                 Timer.Start();
                 arrayCopy.QuickSort();
-                Timer.Stop();
-                break;
-            case ConsoleKey.D3:
-                Timer.Start();
-                arrayCopy.TimSort();
                 Timer.Stop();
                 break;
             case ConsoleKey.D4:
@@ -204,7 +188,7 @@ public static class Application
             case InputType.Number or InputType.Restart:
                 return input is ConsoleKey.D1 or ConsoleKey.D2;
             case InputType.Algorithm:
-                return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3 or ConsoleKey.D4;
+                return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3;
             case InputType.Order:
                 return input is ConsoleKey.D1 or ConsoleKey.D2 or ConsoleKey.D3;
         }

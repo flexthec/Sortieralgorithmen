@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Felix Wahl\\.nuget\\packages\\": {}
+    "C:\\Users\\felix\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GitFork\\Sortieralgorithmen\\SortierAlgorithmen\\SortierAlgorithmen\\SortierAlgorithmen.csproj",
+      "projectUniqueName": "E:\\GitFork\\Sortieralgorithmen\\SortierAlgorithmen\\SortierAlgorithmen\\SortierAlgorithmen.csproj",
       "projectName": "SortierAlgorithmen",
-      "projectPath": "D:\\GitFork\\Sortieralgorithmen\\SortierAlgorithmen\\SortierAlgorithmen\\SortierAlgorithmen.csproj",
-      "packagesPath": "C:\\Users\\Felix Wahl\\.nuget\\packages\\",
-      "outputPath": "D:\\GitFork\\Sortieralgorithmen\\SortierAlgorithmen\\SortierAlgorithmen\\obj\\",
+      "projectPath": "E:\\GitFork\\Sortieralgorithmen\\SortierAlgorithmen\\SortierAlgorithmen\\SortierAlgorithmen.csproj",
+      "packagesPath": "C:\\Users\\felix\\.nuget\\packages\\",
+      "outputPath": "E:\\GitFork\\Sortieralgorithmen\\SortierAlgorithmen\\SortierAlgorithmen\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Felix Wahl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\felix\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

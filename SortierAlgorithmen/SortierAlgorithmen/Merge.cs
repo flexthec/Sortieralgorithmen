@@ -16,34 +16,36 @@ public static class Merge
         for (int y = 0; y < leftIndex; y++)
             rightArray[y] = array[middleIndex + 1 + y]; // copy right half
         
-        int i = 0; // index of left subarray
-        int j = 0; // initial index of left and right subarrays
-        int k = lowIndex; // initial index of merged subarray
+        int i = 0;
+        int j = 0;
+        int k = lowIndex;
         
+        // merge the temp arrays back into the original array
         while (i < rightIndex && j < leftIndex)
         {
-            array[k] = leftArray[i].CompareTo(rightArray[j]) <= 0  // compare left and right subarray
-                ? leftArray[i++] // if left subarray is smaller, copy it to merged subarray
-                : rightArray[j++]; // if right subarray is smaller, copy it to merged subarray
+            array[k] = leftArray[i].CompareTo(rightArray[j]) <= 0  
+                ? leftArray[i++] 
+                : rightArray[j++]; 
 
             k++;
         }
         
-        while (i < rightIndex) // copy remaining elements of left subarray
+        // copy remaining elements of left subarray, if any
+        while (i < rightIndex) 
             array[k++] = leftArray[i++];
 
-        while (j < leftIndex) // copy remaining elements of right subarray
+        while (j < leftIndex)
             array[k++] = rightArray[j++];
     }
 
     private static T[] Sort<T>(this T[] array, int lowIndex, int highIndex) where T : IComparable
     {
-        if (lowIndex >= highIndex) return array; // if array has only one element, return it
+        if (lowIndex >= highIndex) return array;
         
-        var middleIndex = (lowIndex + highIndex) / 2; // calculate middle index
-        array.Sort(lowIndex, middleIndex); // sort first half of the array
-        array.Sort(middleIndex + 1, highIndex); // sort second half
-        array.DoMerge(lowIndex, middleIndex, highIndex); // merge both halves;
+        var middleIndex = (lowIndex + highIndex) / 2;
+        array.Sort(lowIndex, middleIndex);
+        array.Sort(middleIndex + 1, highIndex);
+        array.DoMerge(lowIndex, middleIndex, highIndex); 
         
         return array;
     }
